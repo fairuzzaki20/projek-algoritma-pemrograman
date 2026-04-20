@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Algoritma Pengurutan | Visualisasi Sorting Interaktif</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a2b1f 0%, #0d3b2a 100%);
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+        }
+
+        .campus-header {
+            background: linear-gradient(135deg, #1a5f3a 0%, #0e3d24 100%);
+            padding: 1.5rem 2rem;
+            text-align: center;
+            border-bottom: 4px solid #ffd966;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .campus-header h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: white;
+            letter-spacing: -0.5px;
+        }
+
+        .campus-header h1 span {
+            color: #ffd966;
+            display: inline-block;
+        }
+
+        .campus-header p {
+            color: #c8e6d9;
+            margin-top: 0.5rem;
+            font-weight: 500;
+        }
+
+        .tagline-kampus {
+            background: rgba(255,217,102,0.2);
+            display: inline-block;
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            margin-top: 0.8rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 1rem;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(8px);
+            border-radius: 24px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .menu-item {
+            background: rgba(255,255,255,0.12);
+            border-radius: 16px;
+            padding: 0.8rem 0.5rem;
+            text-align: center;
+            color: white;
+            font-weight: 500;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+            cursor: pointer;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .menu-item:hover {
+            background: rgba(255,217,102,0.25);
+            transform: translateY(-2px);
+        }
+
+        .menu-item i {
+            font-size: 1.4rem;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin: 2rem 0 1.2rem 0;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .section-title h2 {
+            color: #ffd966;
+            font-size: 1.6rem;
+            font-weight: 700;
+            border-left: 5px solid #ffd966;
+            padding-left: 1rem;
+        }
+
+        .lihat-semua {
+            color: #c8e6d9;
+            font-size: 0.85rem;
+            cursor: pointer;
+            background: rgba(255,255,255,0.1);
+            padding: 0.4rem 1rem;
+            border-radius: 30px;
+            transition: 0.2s;
+        }
+
+        .lihat-semua:hover {
+            background: #ffd966;
+            color: #1a5f3a;
+        }
+
+        .algorithm-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 1.8rem;
+            margin-bottom: 2rem;
+        }
+
+        .algorithm-card {
+            background: rgba(15, 35, 28, 0.85);
+            backdrop-filter: blur(8px);
+            border-radius: 28px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255,217,102,0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        .algorithm-card:hover {
+            transform: translateY(-5px);
+            border-color: #ffd966;
+            box-shadow: 0 20px 30px -10px rgba(0,0,0,0.4);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid rgba(255,217,102,0.4);
+            padding-bottom: 0.8rem;
+        }
+
+        .card-icon {
+            font-size: 2rem;
+        }
+
+        .card-header h3 {
+            color: #ffd966;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .complexity {
+            background: #0a2b1f;
+            padding: 0.5rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+            font-size: 0.8rem;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .complexity span {
+            color: #b8f2da;
+        }
+
+        .complexity strong {
+            color: #ffd966;
+        }
+
+        .input-area {
+            background: #071e15;
+            border-radius: 16px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .input-area label {
+            color: #c8e6d9;
+            font-size: 0.8rem;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .input-area input {
+            width: 100%;
+            padding: 0.7rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255,217,102,0.3);
+            background: #0a2b1f;
+            color: white;
+            font-family: inherit;
+            font-size: 0.85rem;
+        }
+
+        .input-area input:focus {
+            outline: none;
+            border-color: #ffd966;
+        }
+
+        .input-area small {
+            color: #9bc0ae;
+            font-size: 0.7rem;
+            display: block;
+            margin-top: 0.3rem;
+        }
+
+        .btn-set {
+            background: linear-gradient(135deg, #4c9f70, #3a7a56);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-family: inherit;
+            color: white;
+            cursor: pointer;
+            margin-top: 0.5rem;
+            transition: 0.2s;
+            font-size: 0.8rem;
+            width: 100%;
+        }
+
+        .btn-set:hover {
+            background: linear-gradient(135deg, #5db87e, #4c9f70);
+            transform: scale(1.01);
+        }
+
+        .visual-box {
+            background: #071e15;
+            border-radius: 20px;
+            padding: 1rem;
+            margin: 1rem 0;
+            min-height: 180px;
+        }
+
+        .array-container {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin: 1rem 0;
+            min-height: 60px;
+        }
+
+        .array-bar {
+            background: #4c9f70;
+            min-width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            font-weight: bold;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            padding: 0 8px;
+        }
+
+        .empty-message {
+            color: #9bc0ae;
+            text-align: center;
+            padding: 1rem;
+            font-size: 0.85rem;
+        }
+
+        .sort-btn {
+            background: linear-gradient(135deg, #ffd966, #ffb347);
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 40px;
+            font-weight: 700;
+            font-family: inherit;
+            color: #1a3a2a;
+            cursor: pointer;
+            margin-top: 0.5rem;
+            transition: 0.2s;
+            font-size: 0.85rem;
+            margin-right: 0.5rem;
+        }
+
+        .sort-btn:hover:not(:disabled) {
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px rgba(255,217,102,0.4);
+        }
+
+        .sort-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .reset-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 1px solid rgba(255,217,102,0.5);
+        }
+
+        .step-info {
+            font-size: 0.75rem;
+            color: #b8f2da;
+            margin-top: 0.8rem;
+            text-align: center;
+        }
+
+        .berita-terbaru {
+            background: rgba(0,0,0,0.3);
+            border-radius: 24px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .berita-item {
+            display: flex;
+            gap: 1rem;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            color: #e0f0e8;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #9bc0ae;
+            font-size: 0.75rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin-top: 2rem;
+        }
+
+        /* Halaman List Materi (Full Page) */
+        .page-materi, .page-praktikum, .page-latihan, .page-soal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0a2b1f 0%, #0d3b2a 100%);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .page-materi.active, .page-praktikum.active, .page-latihan.active, .page-soal.active {
+            display: block;
+        }
+
+        .materi-list-container, .praktikum-container, .latihan-container, .soal-container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+
+        .back-btn {
+            background: rgba(255,217,102,0.2);
+            border: 1px solid #ffd966;
+            padding: 0.8rem 1.5rem;
+            border-radius: 40px;
+            color: #ffd966;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 2rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.2s;
+        }
+
+        .back-btn:hover {
+            background: #ffd966;
+            color: #1a5f3a;
+        }
+
+        .materi-list-title, .praktikum-title, .latihan-title, .soal-title {
+            color: #ffd966;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            border-bottom: 2px solid rgba(255,217,102,0.3);
+            padding-bottom: 1rem;
+        }
+
+        .materi-grid-list, .praktikum-grid-list, .latihan-grid-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .materi-list-card, .praktikum-card, .latihan-card {
+            background: rgba(15, 35, 28, 0.9);
+            border-radius: 20px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255,217,102,0.3);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .materi-list-card:hover, .praktikum-card:hover, .latihan-card:hover {
+            transform: translateY(-5px);
+            border-color: #ffd966;
+            background: rgba(255,217,102,0.1);
+        }
+
+        .materi-list-icon, .praktikum-icon, .latihan-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .materi-list-card h3, .praktikum-card h3, .latihan-card h3 {
+            color: #ffd966;
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .materi-list-card p, .praktikum-card p, .latihan-card p {
+            color: #c8e6d9;
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+
+        /* Detail Materi */
+        .detail-container, .praktikum-detail-container, .soal-container-inner {
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: rgba(15, 35, 28, 0.95);
+            border-radius: 32px;
+            border: 2px solid #ffd966;
+        }
+
+        .detail-header, .praktikum-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid rgba(255,217,102,0.3);
+        }
+
+        .detail-header h2, .praktikum-header h2 {
+            color: #ffd966;
+            font-size: 1.8rem;
+        }
+
+        .detail-back-btn, .praktikum-back-btn, .soal-back-btn {
+            background: rgba(255,255,255,0.1);
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 30px;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .detail-back-btn:hover, .praktikum-back-btn:hover, .soal-back-btn:hover {
+            background: #ffd966;
+            color: #1a5f3a;
+        }
+
+        .materi-section, .praktikum-section {
+            margin-bottom: 2rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 1.5rem;
+        }
+
+        .materi-section h3, .praktikum-section h3 {
+            color: #ffd966;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid #ffd966;
+            padding-left: 1rem;
+        }
+
+        .code-block {
+            background: #071e15;
+            padding: 1rem;
+            border-radius: 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            color: #ffd966;
+            overflow-x: auto;
+            margin: 1rem 0;
+            border-left: 3px solid #ffd966;
+        }
+
+        /* Soal Styles */
+        .soal-item {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .soal-question {
+            color: #ffd966;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+        }
+
+        .soal-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-left: 1rem;
+        }
+
+        .soal-options label {
+            color: #c8e6d9;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .soal-options input {
+            cursor: pointer;
+        }
+
+        .submit-soal-btn {
+            background: linear-gradient(135deg, #ffd966, #ffb347);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 1rem;
+            color: #1a3a2a;
+            cursor: pointer;
+            margin-top: 1.5rem;
+            width: 100%;
+        }
+
+        .skor-container {
+            background: #071e15;
+            border-radius: 16px;
+            padding: 1rem;
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+
+        .skor-nilai {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ffd966;
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                padding: 1rem;
+            }
+            .array-bar {
+                min-width: 35px;
+                height: 35px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="campus-header">
+    <h1>ALGORITMA <span>PEMROGRAMAN</span></h1>
+    <p>Materi Khusus : Algoritma Pengurutan (Sorting)</p>
+    <div class="tagline-kampus">KELOMPOK 7</div>
+</div>
+
+<div class="container">
+    <div class="menu-grid">
+        <div class="menu-item" id="materiBtn"><i>📘</i> Materi</div>
+        <div class="menu-item" id="praktikumBtn"><i>🎓</i> Praktikum</div>
+        <div class="menu-item" id="latihanBtn"><i>📚</i> Latihan Soal</div>
+        <div class="menu-item"><i>✨</i> Lainnya</div>
+    </div>
+
+    <div class="section-title">
+        <h2>📌 Algoritma Pengurutan (Sorting)</h2>
+        <div class="lihat-semua" id="resetAllBtn">⟳ Reset Semua Array</div>
+    </div>
+
+    <div class="algorithm-grid" id="sortingGrid">
+        <!-- Bubble Sort Card -->
+        <div class="algorithm-card" data-algo="bubble">
+            <div class="card-header">
+                <div class="card-icon">🫧</div>
+                <h3>Bubble Sort</h3>
+            </div>
+            <div class="complexity">
+                <span>⚡ Terbaik: <strong>O(n)</strong></span>
+                <span>🐢 Rata-rata: <strong>O(n²)</strong></span>
+                <span>💾 Memori: <strong>O(1)</strong></span>
+            </div>
+            <div class="input-area">
+                <label>📝 Masukkan angka (pisahkan dengan koma):</label>
+                <input type="text" id="bubbleInput" placeholder="Contoh: 64, 34, 25, 12, 22, 11, 90">
+                <button class="btn-set" data-set="bubble">✓ Set Data</button>
+            </div>
+            <div class="visual-box">
+                <div class="array-container" id="bubbleArray"><div class="empty-message">Belum ada data</div></div>
+                <button class="sort-btn" data-sort="bubble" id="bubbleSortBtn" disabled>▶ Jalankan</button>
+                <button class="sort-btn reset-btn" data-reset="bubble" disabled>⟳ Reset</button>
+                <div class="step-info" id="bubbleStatus">⏳ Belum ada data</div>
+            </div>
+        </div>
+
+        <!-- Selection Sort Card -->
+        <div class="algorithm-card" data-algo="selection">
+            <div class="card-header">
+                <div class="card-icon">🎯</div>
+                <h3>Selection Sort</h3>
+            </div>
+            <div class="complexity">
+                <span>⚡ Terbaik: <strong>O(n²)</strong></span>
+                <span>🐢 Rata-rata: <strong>O(n²)</strong></span>
+                <span>💾 Memori: <strong>O(1)</strong></span>
+            </div>
+            <div class="input-area">
+                <label>📝 Masukkan angka (pisahkan dengan koma):</label>
+                <input type="text" id="selectionInput" placeholder="Contoh: 29, 10, 14, 37, 13, 48, 26">
+                <button class="btn-set" data-set="selection">✓ Set Data</button>
+            </div>
+            <div class="visual-box">
+                <div class="array-container" id="selectionArray"><div class="empty-message">Belum ada data</div></div>
+                <button class="sort-btn" data-sort="selection" id="selectionSortBtn" disabled>▶ Jalankan</button>
+                <button class="sort-btn reset-btn" data-reset="selection" disabled>⟳ Reset</button>
+                <div class="step-info" id="selectionStatus">⏳ Belum ada data</div>
+            </div>
+        </div>
+
+        <!-- Insertion Sort Card -->
+        <div class="algorithm-card" data-algo="insertion">
+            <div class="card-header">
+                <div class="card-icon">📌</div>
+                <h3>Insertion Sort</h3>
+            </div>
+            <div class="complexity">
+                <span>⚡ Terbaik: <strong>O(n)</strong></span>
+                <span>🐢 Rata-rata: <strong>O(n²)</strong></span>
+                <span>💾 Memori: <strong>O(1)</strong></span>
+            </div>
+            <div class="input-area">
+                <label>📝 Masukkan angka (pisahkan dengan koma):</label>
+                <input type="text" id="insertionInput" placeholder="Contoh: 12, 11, 13, 5, 6, 7, 9">
+                <button class="btn-set" data-set="insertion">✓ Set Data</button>
+            </div>
+            <div class="visual-box">
+                <div class="array-container" id="insertionArray"><div class="empty-message">Belum ada data</div></div>
+                <button class="sort-btn" data-sort="insertion" id="insertionSortBtn" disabled>▶ Jalankan</button>
+                <button class="sort-btn reset-btn" data-reset="insertion" disabled>⟳ Reset</button>
+                <div class="step-info" id="insertionStatus">⏳ Belum ada data</div>
+            </div>
+        </div>
+
+        <!-- Exchange Sort Card -->
+        <div class="algorithm-card" data-algo="exchange">
+            <div class="card-header">
+                <div class="card-icon">🔄</div>
+                <h3>Exchange Sort</h3>
+            </div>
+            <div class="complexity">
+                <span>⚡ Terbaik: <strong>O(n²)</strong></span>
+                <span>🐢 Rata-rata: <strong>O(n²)</strong></span>
+                <span>💾 Memori: <strong>O(1)</strong></span>
+            </div>
+            <div class="input-area">
+                <label>📝 Masukkan angka (pisahkan dengan koma):</label>
+                <input type="text" id="exchangeInput" placeholder="Contoh: 64, 34, 25, 12, 22, 11, 90">
+                <button class="btn-set" data-set="exchange">✓ Set Data</button>
+            </div>
+            <div class="visual-box">
+                <div class="array-container" id="exchangeArray"><div class="empty-message">Belum ada data</div></div>
+                <button class="sort-btn" data-sort="exchange" id="exchangeSortBtn" disabled>▶ Jalankan</button>
+                <button class="sort-btn reset-btn" data-reset="exchange" disabled>⟳ Reset</button>
+                <div class="step-info" id="exchangeStatus">⏳ Belum ada data</div>
+            </div>
+        </div>
+
+        <!-- Merge Sort Card -->
+        <div class="algorithm-card" data-algo="merge">
+            <div class="card-header">
+                <div class="card-icon">🔄</div>
+                <h3>Merge Sort</h3>
+            </div>
+            <div class="complexity">
+                <span>⚡ Terbaik: <strong>O(n log n)</strong></span>
+                <span>🐢 Rata-rata: <strong>O(n log n)</strong></span>
+                <span>💾 Memori: <strong>O(n)</strong></span>
+            </div>
+            <div class="input-area">
+                <label>📝 Masukkan angka (pisahkan dengan koma):</label>
+                <input type="text" id="mergeInput" placeholder="Contoh: 38, 27, 43, 3, 9, 82, 10">
+                <button class="btn-set" data-set="merge">✓ Set Data</button>
+            </div>
+            <div class="visual-box">
+                <div class="array-container" id="mergeArray"><div class="empty-message">Belum ada data</div></div>
+                <button class="sort-btn" data-sort="merge" id="mergeSortBtn" disabled>▶ Jalankan</button>
+                <button class="sort-btn reset-btn" data-reset="merge" disabled>⟳ Reset</button>
+                <div class="step-info" id="mergeStatus">⏳ Belum ada data</div>
+            </div>
+        </div>
+
+        <!-- Quick Sort Card -->
+        <div class="algorithm-card" data-algo="quick">
+            <div class="card-header">
+                <div class="card-icon">⚡</div>
+                <h3>Quick Sort</h3>
+            </div>
+            <div class="complexity">
+                <span>⚡ Terbaik: <strong>O(n log n)</strong></span>
+                <span>🐢 Rata-rata: <strong>O(n log n)</strong></span>
+                <span>💾 Memori: <strong>O(log n)</strong></span>
+            </div>
+            <div class="input-area">
+                <label>📝 Masukkan angka (pisahkan dengan koma):</label>
+                <input type="text" id="quickInput" placeholder="Contoh: 10, 7, 8, 9, 1, 5">
+                <button class="btn-set" data-set="quick">✓ Set Data</button>
+            </div>
+            <div class="visual-box">
+                <div class="array-container" id="quickArray"><div class="empty-message">Belum ada data</div></div>
+                <button class="sort-btn" data-sort="quick" id="quickSortBtn" disabled>▶ Jalankan</button>
+                <button class="sort-btn reset-btn" data-reset="quick" disabled>⟳ Reset</button>
+                <div class="step-info" id="quickStatus">⏳ Belum ada data</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="berita-terbaru">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+            <h3 style="color:#ffd966;">📰 Penjelasan Algoritma Sorting</h3>
+        </div>
+        <div class="berita-item">🫧 <strong>Bubble Sort:</strong> Membandingkan dan menukar elemen yang berdekatan secara berulang.</div>
+        <div class="berita-item">🎯 <strong>Selection Sort:</strong> Mencari nilai terkecil dan menukarnya ke posisi yang tepat.</div>
+        <div class="berita-item">📌 <strong>Insertion Sort:</strong> Menyisipkan elemen satu per satu seperti menyusun kartu.</div>
+        <div class="berita-item">🔄 <strong>Exchange Sort:</strong> Mirip bubble sort tetapi membandingkan dengan semua elemen.</div>
+        <div class="berita-item">🔄 <strong>Merge Sort:</strong> Divide and conquer, membagi array lalu menggabungkan terurut.</div>
+        <div class="berita-item">⚡ <strong>Quick Sort:</strong> Memilih pivot dan mempartisi array secara rekursif.</div>
+    </div>
+</div>
+
+<footer>
+    © Algoritma Pemrograman - Materi Pengurutan | UNNES 2026
+</footer>
+
+<!-- Halaman List Materi -->
+<div id="pageMateri" class="page-materi">
+    <div class="materi-list-container">
+        <button class="back-btn" id="backFromMateri">← Kembali ke Halaman Utama</button>
+        <h2 class="materi-list-title">📚 Daftar Algoritma Pengurutan</h2>
+        <div class="materi-grid-list" id="materiListGrid"></div>
+    </div>
+</div>
+
+<!-- Halaman Detail Materi -->
+<div id="pageDetail" class="page-materi">
+    <div class="detail-container">
+        <div class="detail-header">
+            <h2 id="detailTitle">📚 Materi Algoritma</h2>
+            <button class="detail-back-btn" id="backFromDetail">← Kembali ke Daftar Materi</button>
+        </div>
+        <div id="detailContent"></div>
+    </div>
+</div>
+
+<!-- Halaman List Praktikum -->
+<div id="pagePraktikum" class="page-praktikum">
+    <div class="praktikum-container">
+        <button class="back-btn" id="backFromPraktikum">← Kembali ke Halaman Utama</button>
+        <h2 class="praktikum-title">🎓 Praktikum Algoritma Sorting</h2>
+        <div class="praktikum-grid-list" id="praktikumListGrid"></div>
+    </div>
+</div>
+
+<!-- Halaman Detail Praktikum -->
+<div id="pagePraktikumDetail" class="page-praktikum">
+    <div class="praktikum-detail-container">
+        <div class="praktikum-header">
+            <h2 id="praktikumTitle">📝 Praktikum</h2>
+            <button class="praktikum-back-btn" id="backFromPraktikumDetail">← Kembali ke Daftar Praktikum</button>
+        </div>
+        <div id="praktikumContent"></div>
+    </div>
+</div>
+
+<!-- Halaman List Latihan Soal -->
+<div id="pageLatihan" class="page-latihan">
+    <div class="latihan-container">
+        <button class="back-btn" id="backFromLatihan">← Kembali ke Halaman Utama</button>
+        <h2 class="latihan-title">📚 Latihan Soal Per Materi</h2>
+        <div class="latihan-grid-list" id="latihanListGrid"></div>
+    </div>
+</div>
+
+<!-- Halaman Soal (20 soal per materi) -->
+<div id="pageSoal" class="page-soal">
+    <div class="soal-container-inner">
+        <div class="detail-header">
+            <h2 id="soalTitle">📝 Latihan Soal</h2>
+            <button class="soal-back-btn" id="backFromSoal">← Kembali ke Daftar Materi</button>
+        </div>
+        <div id="soalContent"></div>
+        <button class="submit-soal-btn" id="submitSoalBtn">✅ Kumpulkan Jawaban & Lihat Skor</button>
+        <div id="skorContainer" class="skor-container" style="display:none;">
+            <h3 style="color:#ffd966;">📊 Hasil Evaluasi</h3>
+            <p>Jawaban Benar: <span id="benarCount" class="skor-nilai">0</span> / <span id="totalSoal">20</span></p>
+            <p>Nilai Akhir: <span id="nilaiAkhir" class="skor-nilai">0</span></p>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Data untuk setiap algoritma (sama seperti sebelumnya)
+    let bubbleData = [], selectionData = [], insertionData = [], exchangeData = [], mergeData = [], quickData = [];
+    let sortingActive = { bubble: false, selection: false, insertion: false, exchange: false, merge: false, quick: false };
+    let sortIntervals = { bubble: null, selection: null, insertion: null, exchange: null, merge: null, quick: null };
+
+    function parseInput(inputValue) {
+        if (!inputValue.trim()) return null;
+        let parts = inputValue.split(',');
+        let numbers = [];
+        for (let part of parts) {
+            let num = parseFloat(part.trim());
+            if (!isNaN(num)) numbers.push(num);
+        }
+        return numbers.length > 0 ? numbers : null;
+    }
+
+    function renderArray(containerId, data, statusId, highlightIndices = []) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+        container.innerHTML = '';
+        if (!data || data.length === 0) {
+            container.innerHTML = '<div class="empty-message">📭 Belum ada data</div>';
+            const statusSpan = document.getElementById(statusId);
+            if (statusSpan) statusSpan.textContent = '⏳ Belum ada data';
+            return;
+        }
+        data.forEach((value, idx) => {
+            const bar = document.createElement('div');
+            bar.className = 'array-bar';
+            if (highlightIndices.includes(idx)) {
+                bar.style.background = '#ffaa44';
+                bar.style.transform = 'scale(1.05)';
+                bar.style.boxShadow = '0 0 0 2px #ffd966';
+            } else {
+                bar.style.background = '#4c9f70';
+            }
+            bar.textContent = value;
+            container.appendChild(bar);
+        });
+        const statusSpan = document.getElementById(statusId);
+        if (statusSpan) statusSpan.textContent = `📊 [${data.join(', ')}]`;
+    }
+
+    function updateButtons(algo, hasData) {
+        const sortBtn = document.getElementById(`${algo}SortBtn`);
+        const resetBtn = document.querySelector(`[data-reset="${algo}"]`);
+        if (sortBtn) sortBtn.disabled = !hasData;
+        if (resetBtn) resetBtn.disabled = !hasData;
+    }
+
+    function setData(algo) {
+        let inputId;
+        if (algo === 'bubble') inputId = 'bubbleInput';
+        else if (algo === 'selection') inputId = 'selectionInput';
+        else if (algo === 'insertion') inputId = 'insertionInput';
+        else if (algo === 'exchange') inputId = 'exchangeInput';
+        else if (algo === 'merge') inputId = 'mergeInput';
+        else inputId = 'quickInput';
+        
+        const inputEl = document.getElementById(inputId);
+        const numbers = parseInput(inputEl.value);
+        if (!numbers || numbers.length === 0) {
+            alert('❌ Masukkan angka yang valid! Pisahkan dengan koma.');
+            return;
+        }
+        if (sortIntervals[algo]) { clearTimeout(sortIntervals[algo]); sortIntervals[algo] = null; }
+        sortingActive[algo] = false;
+        if (algo === 'bubble') bubbleData = [...numbers];
+        else if (algo === 'selection') selectionData = [...numbers];
+        else if (algo === 'insertion') insertionData = [...numbers];
+        else if (algo === 'exchange') exchangeData = [...numbers];
+        else if (algo === 'merge') mergeData = [...numbers];
+        else quickData = [...numbers];
+        
+        renderArray(`${algo}Array`, numbers, `${algo}Status`);
+        updateButtons(algo, true);
+        window[`original${algo.charAt(0).toUpperCase() + algo.slice(1)}`] = [...numbers];
+    }
+
+    function resetArray(algo) {
+        if (sortIntervals[algo]) { clearTimeout(sortIntervals[algo]); sortIntervals[algo] = null; }
+        sortingActive[algo] = false;
+        let originalData = window[`original${algo.charAt(0).toUpperCase() + algo.slice(1)}`];
+        if (!originalData || originalData.length === 0) return;
+        if (algo === 'bubble') { bubbleData = [...originalData]; renderArray('bubbleArray', bubbleData, 'bubbleStatus'); }
+        else if (algo === 'selection') { selectionData = [...originalData]; renderArray('selectionArray', selectionData, 'selectionStatus'); }
+        else if (algo === 'insertion') { insertionData = [...originalData]; renderArray('insertionArray', insertionData, 'insertionStatus'); }
+        else if (algo === 'exchange') { exchangeData = [...originalData]; renderArray('exchangeArray', exchangeData, 'exchangeStatus'); }
+        else if (algo === 'merge') { mergeData = [...originalData]; renderArray('mergeArray', mergeData, 'mergeStatus'); }
+        else if (algo === 'quick') { quickData = [...originalData]; renderArray('quickArray', quickData, 'quickStatus'); }
+    }
+
+    // Sorting functions
+    function startBubbleSort() {
+        if (sortingActive.bubble) return;
+        if (!bubbleData || bubbleData.length === 0) { alert('Masukkan data terlebih dahulu!'); return; }
+        resetArray('bubble');
+        sortingActive.bubble = true;
+        let arr = bubbleData, n = arr.length, i = 0, j = 0, swapped = false;
+        function bubbleStep() {
+            if (!sortingActive.bubble) return;
+            if (i < n - 1) {
+                if (j < n - i - 1) {
+                    renderArray('bubbleArray', arr, 'bubbleStatus', [j, j+1]);
+                    if (arr[j] > arr[j+1]) { [arr[j], arr[j+1]] = [arr[j+1], arr[j]]; swapped = true; renderArray('bubbleArray', arr, 'bubbleStatus', [j, j+1]); }
+                    j++;
+                    sortIntervals.bubble = setTimeout(bubbleStep, 400);
+                } else {
+                    if (!swapped) { sortingActive.bubble = false; renderArray('bubbleArray', arr, 'bubbleStatus', []); return; }
+                    i++; j = 0; swapped = false; sortIntervals.bubble = setTimeout(bubbleStep, 300);
+                }
+            } else { sortingActive.bubble = false; renderArray('bubbleArray', arr, 'bubbleStatus', []); }
+        }
+        bubbleStep();
+    }
+
+    function startSelectionSort() {
+        if (sortingActive.selection) return;
+        if (!selectionData || selectionData.length === 0) { alert('Masukkan data terlebih dahulu!'); return; }
+        resetArray('selection');
+        sortingActive.selection = true;
+        let arr = selectionData, n = arr.length, i = 0;
+        function selectionStep() {
+            if (!sortingActive.selection) return;
+            if (i < n - 1) {
+                let minIdx = i;
+                for (let j = i+1; j < n; j++) if (arr[j] < arr[minIdx]) minIdx = j;
+                if (minIdx !== i) [arr[i], arr[minIdx]] = [arr[minIdx], arr[i]];
+                renderArray('selectionArray', arr, 'selectionStatus', [i, minIdx]);
+                i++;
+                sortIntervals.selection = setTimeout(selectionStep, 500);
+            } else { sortingActive.selection = false; renderArray('selectionArray', arr, 'selectionStatus', []); }
+        }
+        selectionStep();
+    }
+
+    function startInsertionSort() {
+        if (sortingActive.insertion) return;
+        if (!insertionData || insertionData.length === 0) { alert('Masukkan data terlebih dahulu!'); return; }
+        resetArray('insertion');
+        sortingActive.insertion = true;
+        let arr = insertionData, n = arr.length, i = 1;
+        function insertionStep() {
+            if (!sortingActive.insertion) return;
+            if (i < n) {
+                let key = arr[i], j = i - 1;
+                while (j >= 0 && arr[j] > key) { arr[j+1] = arr[j]; j--; }
+                arr[j+1] = key;
+                renderArray('insertionArray', arr, 'insertionStatus', [i, j+1]);
+                i++;
+                sortIntervals.insertion = setTimeout(insertionStep, 500);
+            } else { sortingActive.insertion = false; renderArray('insertionArray', arr, 'insertionStatus', []); }
+        }
+        insertionStep();
+    }
+
+    function startExchangeSort() {
+        if (sortingActive.exchange) return;
+        if (!exchangeData || exchangeData.length === 0) { alert('Masukkan data terlebih dahulu!'); return; }
+        resetArray('exchange');
+        sortingActive.exchange = true;
+        let arr = exchangeData, n = arr.length, i = 0, j = 1;
+        function step() {
+            if (!sortingActive.exchange) return;
+            if (i < n - 1) {
+                if (j < n) {
+                    renderArray('exchangeArray', arr, 'exchangeStatus', [i, j]);
+                    if (arr[i] > arr[j]) { [arr[i], arr[j]] = [arr[j], arr[i]]; renderArray('exchangeArray', arr, 'exchangeStatus', [i, j]); }
+                    j++;
+                    sortIntervals.exchange = setTimeout(step, 300);
+                } else { i++; j = i + 1; sortIntervals.exchange = setTimeout(step, 200); }
+            } else { sortingActive.exchange = false; renderArray('exchangeArray', arr, 'exchangeStatus', []); }
+        }
+        step();
+    }
+
+    function startMergeSort() {
+        if (sortingActive.merge) return;
+        if (!mergeData || mergeData.length === 0) { alert('Masukkan data terlebih dahulu!'); return; }
+        resetArray('merge');
+        sortingActive.merge = true;
+        let arr = [...mergeData];
+        function mergeSortVisual(arr) {
+            if (arr.length <= 1) return arr;
+            const mid = Math.floor(arr.length / 2);
+            const left = mergeSortVisual(arr.slice(0, mid));
+            const right = mergeSortVisual(arr.slice(mid));
+            return merge(left, right);
+        }
+        function merge(left, right) {
+            let result = [], i = 0, j = 0;
+            while (i < left.length && j < right.length) {
+                if (left[i] <= right[j]) result.push(left[i++]);
+                else result.push(right[j++]);
+            }
+            return [...result, ...left.slice(i), ...right.slice(j)];
+        }
+        let sorted = mergeSortVisual(arr);
+        let step = 0;
+        function animateMerge() {
+            if (!sortingActive.merge) return;
+            if (step <= sorted.length) {
+                let partial = sorted.slice(0, step);
+                renderArray('mergeArray', partial.concat(new Array(sorted.length - step).fill('?')), 'mergeStatus');
+                step++;
+                sortIntervals.merge = setTimeout(animateMerge, 400);
+            } else {
+                renderArray('mergeArray', sorted, 'mergeStatus');
+                sortingActive.merge = false;
+            }
+        }
+        animateMerge();
+    }
+
+    function startQuickSort() {
+        if (sortingActive.quick) return;
+        if (!quickData || quickData.length === 0) { alert('Masukkan data terlebih dahulu!'); return; }
+        resetArray('quick');
+        sortingActive.quick = true;
+        let arr = [...quickData];
+        let steps = [];
+        function quickSortStep(l, r) {
+            if (l < r) {
+                let p = partition(l, r);
+                quickSortStep(l, p - 1);
+                quickSortStep(p + 1, r);
+            }
+        }
+        function partition(l, r) {
+            let pivot = arr[r];
+            let i = l - 1;
+            for (let j = l; j < r; j++) {
+                if (arr[j] <= pivot) { i++; [arr[i], arr[j]] = [arr[j], arr[i]]; steps.push([...arr]); }
+            }
+            [arr[i + 1], arr[r]] = [arr[r], arr[i + 1]];
+            steps.push([...arr]);
+            return i + 1;
+        }
+        quickSortStep(0, arr.length - 1);
+        let idx = 0;
+        function animateQuick() {
+            if (!sortingActive.quick) return;
+            if (idx < steps.length) { renderArray('quickArray', steps[idx], 'quickStatus'); idx++; sortIntervals.quick = setTimeout(animateQuick, 400); }
+            else { renderArray('quickArray', arr, 'quickStatus'); sortingActive.quick = false; }
+        }
+        animateQuick();
+    }
+
+    // Event Listeners untuk sorting
+    document.querySelectorAll('[data-set]').forEach(btn => btn.addEventListener('click', (e) => setData(btn.getAttribute('data-set'))));
+    document.querySelectorAll('[data-sort]').forEach(btn => btn.addEventListener('click', (e) => {
+        const algo = btn.getAttribute('data-sort');
+        if (algo === 'bubble') startBubbleSort();
+        else if (algo === 'selection') startSelectionSort();
+        else if (algo === 'insertion') startInsertionSort();
+        else if (algo === 'exchange') startExchangeSort();
+        else if (algo === 'merge') startMergeSort();
+        else if (algo === 'quick') startQuickSort();
+    }));
+    document.querySelectorAll('[data-reset]').forEach(btn => btn.addEventListener('click', (e) => { const algo = btn.getAttribute('data-reset'); resetArray(algo); if(sortIntervals[algo]) { clearTimeout(sortIntervals[algo]); sortIntervals[algo]=null; } sortingActive[algo]=false; }));
+    document.getElementById('resetAllBtn')?.addEventListener('click', () => { ['bubble','selection','insertion','exchange','merge','quick'].forEach(a => resetArray(a)); for(let k in sortIntervals) { if(sortIntervals[k]) clearTimeout(sortIntervals[k]); sortIntervals[k]=null; sortingActive[k]=false; } });
+
+    // ==================== DATA MATERI ====================
+    const algoritmaList = [
+        { id: 'bubble', nama: 'Bubble Sort', icon: '🫧', desc: 'Membandingkan dan menukar elemen berdekatan' },
+        { id: 'selection', nama: 'Selection Sort', icon: '🎯', desc: 'Memilih elemen terkecil dan menukar ke posisi awal' },
+        { id: 'insertion', nama: 'Insertion Sort', icon: '📌', desc: 'Menyisipkan elemen satu per satu ke posisi tepat' },
+        { id: 'exchange', nama: 'Exchange Sort', icon: '🔄', desc: 'Membandingkan setiap elemen dengan elemen setelahnya' },
+        { id: 'merge', nama: 'Merge Sort', icon: '🔄', desc: 'Divide and conquer, bagi lalu gabungkan' },
+        { id: 'quick', nama: 'Quick Sort', icon: '⚡', desc: 'Pilih pivot, partisi, rekursif' },
+        { id: 'perbandingan', nama: 'Perbandingan Semua Algoritma', icon: '📊', desc: 'Tabel perbandingan kompleksitas' }
+    ];
+
+    // Generate list materi
+    const materiListGrid = document.getElementById('materiListGrid');
+    algoritmaList.forEach(algo => {
+        const card = document.createElement('div');
+        card.className = 'materi-list-card';
+        card.setAttribute('data-materi', algo.id);
+        card.innerHTML = `
+            <div class="materi-list-icon">${algo.icon}</div>
+            <h3>${algo.nama}</h3>
+            <p>${algo.desc}</p>
+        `;
+        materiListGrid.appendChild(card);
+    });
+
+    // Generate list praktikum
+    const praktikumListGrid = document.getElementById('praktikumListGrid');
+    algoritmaList.filter(a => a.id !== 'perbandingan').forEach(algo => {
+        const card = document.createElement('div');
+        card.className = 'praktikum-card';
+        card.setAttribute('data-praktikum', algo.id);
+        card.innerHTML = `
+            <div class="praktikum-icon">${algo.icon}</div>
+            <h3>${algo.nama}</h3>
+            <p>Praktikum dan implementasi ${algo.nama}</p>
+        `;
+        praktikumListGrid.appendChild(card);
+    });
+
+    // Generate list latihan soal
+    const latihanListGrid = document.getElementById('latihanListGrid');
+    algoritmaList.filter(a => a.id !== 'perbandingan').forEach(algo => {
+        const card = document.createElement('div');
+        card.className = 'latihan-card';
+        card.setAttribute('data-latihan', algo.id);
+        card.innerHTML = `
+            <div class="latihan-icon">${algo.icon}</div>
+            <h3>${algo.nama}</h3>
+            <p>20 Soal latihan untuk ${algo.nama}</p>
+        `;
+        latihanListGrid.appendChild(card);
+    });
+
+    // Data soal untuk setiap algoritma (20 soal)
+    const soalData = {
+        bubble: [
+            { question: "Apa prinsip dasar dari Bubble Sort?", options: ["Membandingkan elemen berdekatan dan menukar jika salah urut", "Memilih elemen terkecil", "Membagi array menjadi dua bagian", "Menggunakan pivot"], answer: 0 },
+            { question: "Apa kompleksitas waktu terburuk Bubble Sort?", options: ["O(n)", "O(n log n)", "O(n²)", "O(log n)"], answer: 2 },
+            { question: "Bubble Sort disebut juga dengan?", options: ["Exchange Sort", "Sinking Sort", "Selection Sort", "Merge Sort"], answer: 1 },
+            { question: "Berapa kali iterasi maksimal Bubble Sort untuk array dengan n elemen?", options: ["n", "n-1", "n²", "n log n"], answer: 1 },
+            { question: "Bubble Sort termasuk algoritma yang stabil?", options: ["Ya", "Tidak", "Tergantung data", "Hanya untuk angka genap"], answer: 0 },
+            { question: "Apa yang terjadi pada iterasi pertama Bubble Sort?", options: ["Elemen terbesar berpindah ke akhir", "Elemen terkecil ke awal", "Array langsung terurut", "Tidak ada perubahan"], answer: 0 },
+            { question: "Bubble Sort menggunakan metode apa?", options: ["Divide and Conquer", "Greedy", "Brute Force", "Dynamic Programming"], answer: 2 },
+            { question: "Apa kelebihan Bubble Sort?", options: ["Cepat untuk data besar", "Mudah dipahami", "Memory besar", "Stabil untuk semua data"], answer: 1 },
+            { question: "Bubble Sort optimal jika array sudah terurut, kompleksitasnya menjadi?", options: ["O(n)", "O(n²)", "O(1)", "O(log n)"], answer: 0 },
+            { question: "Pada Bubble Sort, proses penukaran terjadi jika?", options: ["arr[j] < arr[j+1]", "arr[j] > arr[j+1]", "arr[j] = arr[j+1]", "arr[j] != arr[j+1]"], answer: 1 },
+            { question: "Apa kegunaan variabel 'swapped' pada Bubble Sort?", options: ["Menghitung jumlah swap", "Mendeteksi apakah ada pertukaran", "Menyimpan nilai sementara", "Sebagai indeks"], answer: 1 },
+            { question: "Bubble Sort termasuk algoritma apa?", options: ["In-place sorting", "Out-place sorting", "External sorting", "Hybrid sorting"], answer: 0 },
+            { question: "Berapa jumlah pass yang dilakukan Bubble Sort untuk array 10 elemen?", options: ["10", "9", "11", "5"], answer: 1 },
+            { question: "Bubble Sort paling efisien untuk data yang?", options: ["Sudah terurut", "Terbalik", "Acak", "Berulang"], answer: 0 },
+            { question: "Apa yang dimaksud dengan 'bubble' pada Bubble Sort?", options: ["Elemen besar menggelembung ke atas", "Elemen kecil tenggelam", "Array bergelembung", "Proses acak"], answer: 0 },
+            { question: "Bubble Sort membutuhkan memori tambahan sebesar?", options: ["O(1)", "O(n)", "O(n²)", "O(log n)"], answer: 0 },
+            { question: "Manakah yang BUKAN karakteristik Bubble Sort?", options: ["Sederhana", "Stabil", "Efisien untuk data besar", "In-place"], answer: 2 },
+            { question: "Bubble Sort cocok digunakan untuk?", options: ["Data sangat besar", "Pembelajaran dasar", "Data real-time", "Database"], answer: 1 },
+            { question: "Apa kompleksitas rata-rata Bubble Sort?", options: ["O(n)", "O(n log n)", "O(n²)", "O(2^n)"], answer: 2 },
+            { question: "Bubble Sort pertama kali diperkenalkan oleh?", options: ["Donald Knuth", "Tony Hoare", "John von Neumann", "Tidak diketahui pasti"], answer: 3 }
+        ],
+        selection: [
+            { question: "Apa prinsip Selection Sort?", options: ["Memilih elemen terkecil dan menukar ke posisi awal", "Membandingkan elemen berdekatan", "Membagi array", "Menggunakan pivot"], answer: 0 },
+            { question: "Kompleksitas waktu Selection Sort?", options: ["O(n)", "O(n log n)", "O(n²)", "O(2^n)"], answer: 2 },
+            { question: "Selection Sort termasuk algoritma?", options: ["Stabil", "Tidak stabil", "Adaptif", "Rekursif"], answer: 1 },
+            { question: "Pada Selection Sort, berapa kali penukaran terjadi?", options: ["n kali", "n-1 kali", "n² kali", "Tergantung data"], answer: 1 },
+            { question: "Apa yang dilakukan pada setiap iterasi Selection Sort?", options: ["Mencari nilai minimum", "Mencari nilai maksimum", "Membagi array", "Menggabungkan array"], answer: 0 },
+            { question: "Selection Sort cocok untuk?", options: ["Data kecil", "Data sangat besar", "Data terstruktur", "Data berantakan"], answer: 0 },
+            { question: "Apa kelemahan Selection Sort?", options: ["Banyak penukaran", "Banyak perbandingan", "Memori besar", "Tidak stabil"], answer: 3 },
+            { question: "Selection Sort menggunakan memori tambahan?", options: ["O(1)", "O(n)", "O(log n)", "O(n²)"], answer: 0 },
+            { question: "Algoritma mana yang mirip dengan Selection Sort?", options: ["Bubble Sort", "Insertion Sort", "Heap Sort", "Merge Sort"], answer: 2 },
+            { question: "Selection Sort pertama kali ditemukan oleh?", options: ["Tony Hoare", "John von Neumann", "Donald Knuth", "Tidak diketahui"], answer: 3 },
+            { question: "Pada array [5,2,8,1,9], setelah iterasi pertama Selection Sort menjadi?", options: ["[1,2,8,5,9]", "[2,5,8,1,9]", "[1,5,8,2,9]", "[5,2,8,1,9]"], answer: 0 },
+            { question: "Selection Sort termasuk algoritma?", options: ["In-place", "Out-place", "External", "Online"], answer: 0 },
+            { question: "Apa perbedaan utama dengan Bubble Sort?", options: ["Jumlah swap lebih sedikit", "Lebih cepat", "Lebih lambat", "Memori lebih besar"], answer: 0 },
+            { question: "Selection Sort paling tidak efisien untuk data?", options: ["Sudah terurut", "Terbalik", "Acak", "Semua sama"], answer: 0 },
+            { question: "Berapa total perbandingan Selection Sort untuk n elemen?", options: ["n(n-1)/2", "n-1", "n²", "n log n"], answer: 0 },
+            { question: "Selection Sort termasuk algoritma apa?", options: ["Divide and Conquer", "Greedy", "Brute Force", "Dynamic"], answer: 2 },
+            { question: "Apa yang terjadi pada iterasi terakhir Selection Sort?", options: ["Dua elemen terakhir ditukar", "Array terurut", "Tidak ada perubahan", "Error"], answer: 0 },
+            { question: "Selection Sort paling mirip dengan?", options: ["Bubble Sort", "Insertion Sort", "Exchange Sort", "Quick Sort"], answer: 2 },
+            { question: "Kompleksitas terbaik Selection Sort?", options: ["O(n²)", "O(n)", "O(n log n)", "O(1)"], answer: 0 },
+            { question: "Selection Sort menggunakan teknik apa?", options: ["Pemilihan minimum", "Pertukaran berpasangan", "Pembagian array", "Penggabungan"], answer: 0 }
+        ],
+        insertion: [
+            { question: "Insertion Sort mirip dengan?", options: ["Menyusun kartu", "Mencari minimum", "Membagi array", "Menukar berpasangan"], answer: 0 },
+            { question: "Kompleksitas terbaik Insertion Sort?", options: ["O(n)", "O(n²)", "O(n log n)", "O(1)"], answer: 0 },
+            { question: "Insertion Sort termasuk algoritma?", options: ["Stabil", "Tidak stabil", "Rekursif", "Acak"], answer: 0 },
+            { question: "Pada Insertion Sort, elemen pertama dianggap?", options: ["Sudah terurut", "Belum terurut", "Pivot", "Minimum"], answer: 0 },
+            { question: "Insertion Sort paling efisien untuk data?", options: ["Hampir terurut", "Terbalik", "Acak", "Berulang"], answer: 0 },
+            { question: "Apa yang dilakukan dengan 'key' pada Insertion Sort?", options: ["Disisipkan ke posisi tepat", "Dibuang", "Ditukar dengan pertama", "Dijadikan pivot"], answer: 0 },
+            { question: "Insertion Sort menggunakan memori tambahan?", options: ["O(1)", "O(n)", "O(log n)", "O(n²)"], answer: 0 },
+            { question: "Algoritma apa yang mirip dengan Insertion Sort?", options: ["Bubble Sort", "Selection Sort", "Merge Sort", "Shell Sort"], answer: 3 },
+            { question: "Pada array [5,2,4,6,1], setelah iterasi ke-2 menjadi?", options: ["[2,4,5,6,1]", "[2,5,4,6,1]", "[2,4,5,6,1]", "[1,2,4,5,6]"], answer: 0 },
+            { question: "Insertion Sort termasuk algoritma?", options: ["In-place", "Out-place", "External", "Online"], answer: 0 },
+            { question: "Apa kelebihan Insertion Sort?", options: ["Efisien untuk data kecil", "Cepat untuk data besar", "Memori kecil", "Mudah diimplementasi"], answer: 0 },
+            { question: "Kompleksitas terburuk Insertion Sort?", options: ["O(n²)", "O(n)", "O(n log n)", "O(2^n)"], answer: 0 },
+            { question: "Insertion Sort menggunakan teknik apa?", options: ["Sisipan", "Pemilihan", "Pertukaran", "Pembagian"], answer: 0 },
+            { question: "Berapa jumlah perbandingan maksimal Insertion Sort?", options: ["n(n-1)/2", "n-1", "n²", "n log n"], answer: 0 },
+            { question: "Insertion Sort pertama kali diperkenalkan oleh?", options: ["John von Neumann", "Tony Hoare", "Donald Knuth", "Tidak diketahui"], answer: 0 },
+            { question: "Insertion Sort cocok untuk?", options: ["Data real-time kecil", "Database besar", "File eksternal", "Semua data"], answer: 0 },
+            { question: "Apa yang terjadi jika array sudah terurut pada Insertion Sort?", options: ["Hanya O(n) perbandingan", "Tetap O(n²)", "Error", "Tidak berfungsi"], answer: 0 },
+            { question: "Insertion Sort paling mirip dengan?", options: ["Bubble Sort", "Selection Sort", "Merge Sort", "Quick Sort"], answer: 0 },
+            { question: "Insertion Sort termasuk algoritma adaptif?", options: ["Ya", "Tidak", "Kadang", "Tergantung"], answer: 0 },
+            { question: "Apa nama lain Insertion Sort?", options: ["Linear Insertion Sort", "Binary Insertion Sort", "Selection Insertion", "Merge Insertion"], answer: 0 }
+        ],
+        exchange: [
+            { question: "Exchange Sort mirip dengan algoritma apa?", options: ["Bubble Sort", "Selection Sort", "Insertion Sort", "Quick Sort"], answer: 0 },
+            { question: "Kompleksitas Exchange Sort?", options: ["O(n²)", "O(n)", "O(n log n)", "O(2^n)"], answer: 0 },
+            { question: "Exchange Sort membandingkan elemen dengan?", options: ["Semua elemen setelahnya", "Elemen berdekatan", "Elemen tengah", "Elemen acak"], answer: 0 },
+            { question: "Exchange Sort termasuk algoritma?", options: ["In-place", "Out-place", "External", "Online"], answer: 0 },
+            { question: "Perbedaan Exchange Sort dengan Bubble Sort?", options: ["Cara perbandingan", "Jumlah iterasi", "Memori", "Stabilitas"], answer: 0 },
+            { question: "Exchange Sort menggunakan memori tambahan?", options: ["O(1)", "O(n)", "O(log n)", "O(n²)"], answer: 0 },
+            { question: "Exchange Sort disebut juga?", options: ["Bubble Sort", "Selection Sort", "Insertion Sort", "Merge Sort"], answer: 0 },
+            { question: "Pada Exchange Sort, setelah iterasi pertama, elemen pertama menjadi?", options: ["Elemen terkecil", "Elemen terbesar", "Elemen tengah", "Tetap"], answer: 0 },
+            { question: "Exchange Sort cocok untuk?", options: ["Data kecil", "Data besar", "Data terstruktur", "Semua data"], answer: 0 },
+            { question: "Apa kelemahan Exchange Sort?", options: ["Banyak perbandingan", "Memori besar", "Tidak stabil", "Rekursif"], answer: 0 },
+            { question: "Exchange Sort termasuk algoritma?", options: ["Brute Force", "Divide and Conquer", "Greedy", "Dynamic"], answer: 0 },
+            { question: "Berapa total perbandingan Exchange Sort?", options: ["n(n-1)/2", "n-1", "n²", "n log n"], answer: 0 },
+            { question: "Exchange Sort pertama kali diperkenalkan oleh?", options: ["Tidak diketahui", "Tony Hoare", "John von Neumann", "Donald Knuth"], answer: 0 },
+            { question: "Exchange Sort paling mirip dengan algoritma apa?", options: ["Bubble Sort", "Selection Sort", "Insertion Sort", "Quick Sort"], answer: 0 },
+            { question: "Exchange Sort menggunakan teknik apa?", options: ["Pertukaran berpasangan", "Pemilihan minimum", "Sisipan", "Pembagian"], answer: 0 },
+            { question: "Exchange Sort termasuk algoritma stabil?", options: ["Tidak", "Ya", "Tergantung", "Kadang"], answer: 0 },
+            { question: "Pada array [5,2,8,1], setelah iterasi pertama Exchange Sort menjadi?", options: ["[1,5,8,2]", "[2,5,8,1]", "[1,2,8,5]", "[5,2,8,1]"], answer: 0 },
+            { question: "Kompleksitas terbaik Exchange Sort?", options: ["O(n²)", "O(n)", "O(n log n)", "O(1)"], answer: 0 },
+            { question: "Exchange Sort termasuk algoritma apa?", options: ["In-place", "Out-place", "External", "Online"], answer: 0 },
+            { question: "Apa nama lain Exchange Sort?", options: ["Bubble Sort", "Selection Sort", "Insertion Sort", "Merge Sort"], answer: 0 }
+        ],
+        merge: [
+            { question: "Merge Sort menggunakan konsep apa?", options: ["Divide and Conquer", "Greedy", "Dynamic Programming", "Brute Force"], answer: 0 },
+            { question: "Kompleksitas Merge Sort?", options: ["O(n log n)", "O(n²)", "O(n)", "O(2^n)"], answer: 0 },
+            { question: "Merge Sort membutuhkan memori tambahan sebesar?", options: ["O(n)", "O(1)", "O(log n)", "O(n²)"], answer: 0 },
+            { question: "Merge Sort termasuk algoritma?", options: ["Stabil", "Tidak stabil", "Adaptif", "Online"], answer: 0 },
+            { question: "Proses penggabungan pada Merge Sort disebut?", options: ["Merge", "Partition", "Swap", "Insert"], answer: 0 },
+            { question: "Merge Sort pertama kali diperkenalkan oleh?", options: ["John von Neumann", "Tony Hoare", "Donald Knuth", "Edsger Dijkstra"], answer: 0 },
+            { question: "Merge Sort cocok untuk?", options: ["Data besar", "Data kecil", "Data acak", "Data terstruktur"], answer: 0 },
+            { question: "Merge Sort menggunakan teknik apa?", options: ["Rekursif", "Iteratif", "Looping", "Sequential"], answer: 0 },
+            { question: "Apa kelemahan Merge Sort?", options: ["Memori besar", "Lambat", "Tidak stabil", "Sulit diimplementasi"], answer: 0 },
+            { question: "Pada Merge Sort, array dibagi menjadi dua hingga?", options: ["Satu elemen", "Dua elemen", "Tiga elemen", "Empat elemen"], answer: 0 },
+            { question: "Kompleksitas terburuk Merge Sort?", options: ["O(n log n)", "O(n²)", "O(n)", "O(2^n)"], answer: 0 },
+            { question: "Merge Sort termasuk algoritma?", options: ["External sorting", "Internal sorting", "Hybrid sorting", "Online sorting"], answer: 0 },
+            { question: "Apa yang dilakukan fungsi merge pada Merge Sort?", options: ["Menggabungkan dua array terurut", "Membagi array", "Menukar elemen", "Mencari pivot"], answer: 0 },
+            { question: "Merge Sort paling efisien untuk data?", options: ["Semua data", "Data terbalik", "Data acak", "Data terurut"], answer: 0 },
+            { question: "Berapa jumlah level pembagian pada Merge Sort untuk n=8?", options: ["3", "2", "4", "5"], answer: 0 },
+            { question: "Merge Sort termasuk algoritma?", options: ["Out-place", "In-place", "Adaptif", "Online"], answer: 0 },
+            { question: "Merge Sort mirip dengan algoritma apa?", options: ["Quick Sort", "Heap Sort", "Bubble Sort", "Selection Sort"], answer: 0 },
+            { question: "Kompleksitas terbaik Merge Sort?", options: ["O(n log n)", "O(n)", "O(n²)", "O(1)"], answer: 0 },
+            { question: "Merge Sort menggunakan metode apa?", options: ["Divide and Conquer", "Greedy", "Dynamic", "Brute Force"], answer: 0 },
+            { question: "Apa nama lain Merge Sort?", options: ["Tidak ada", "Merge Exchange", "Merge Selection", "Merge Insertion"], answer: 0 }
+        ],
+        quick: [
+            { question: "Quick Sort menggunakan konsep apa?", options: ["Divide and Conquer", "Greedy", "Dynamic", "Brute Force"], answer: 0 },
+            { question: "Apa yang dipilih sebagai pembagi pada Quick Sort?", options: ["Pivot", "Minimum", "Maksimum", "Median"], answer: 0 },
+            { question: "Kompleksitas rata-rata Quick Sort?", options: ["O(n log n)", "O(n²)", "O(n)", "O(2^n)"], answer: 0 },
+            { question: "Kompleksitas terburuk Quick Sort?", options: ["O(n²)", "O(n log n)", "O(n)", "O(2^n)"], answer: 0 },
+            { question: "Quick Sort pertama kali ditemukan oleh?", options: ["Tony Hoare", "John von Neumann", "Donald Knuth", "Edsger Dijkstra"], answer: 0 },
+            { question: "Proses partisi pada Quick Sort bertujuan untuk?", options: ["Menempatkan pivot di posisi tepat", "Membagi array", "Menggabungkan array", "Menukar elemen"], answer: 0 },
+            { question: "Quick Sort termasuk algoritma?", options: ["In-place", "Out-place", "External", "Online"], answer: 0 },
+            { question: "Quick Sort tidak stabil karena?", options: ["Penukaran jarak jauh", "Penukaran berdekatan", "Pembagian array", "Penggabungan"], answer: 0 },
+            { question: "Pivot yang baik sebaiknya?", options: ["Mendekati median", "Nilai terkecil", "Nilai terbesar", "Nilai tengah indeks"], answer: 0 },
+            { question: "Quick Sort cocok untuk?", options: ["Data besar", "Data kecil", "Data terstruktur", "Data acak"], answer: 0 },
+            { question: "Apa kelemahan Quick Sort?", options: ["Worst case O(n²)", "Memori besar", "Sulit diimplementasi", "Tidak rekursif"], answer: 0 },
+            { question: "Quick Sort menggunakan memori tambahan?", options: ["O(log n)", "O(n)", "O(1)", "O(n²)"], answer: 0 },
+            { question: "Pemilihan pivot terakhir sering digunakan karena?", options: ["Sederhana", "Cepat", "Efisien", "Stabil"], answer: 0 },
+            { question: "Quick Sort paling lambat saat?", options: ["Array sudah terurut", "Array acak", "Array terbalik", "Array kecil"], answer: 0 },
+            { question: "Quick Sort termasuk algoritma?", options: ["Rekursif", "Iteratif", "Looping", "Sequential"], answer: 0 },
+            { question: "Kompleksitas terbaik Quick Sort?", options: ["O(n log n)", "O(n)", "O(n²)", "O(1)"], answer: 0 },
+            { question: "Quick Sort mirip dengan algoritma apa?", options: ["Merge Sort", "Heap Sort", "Bubble Sort", "Selection Sort"], answer: 0 },
+            { question: "Quick Sort menggunakan teknik apa?", options: ["Partisi", "Merge", "Swap", "Insert"], answer: 0 },
+            { question: "Apa yang terjadi jika pivot selalu nilai terkecil?", options: ["Worst case O(n²)", "Best case O(n log n)", "Average case", "Stabil"], answer: 0 },
+            { question: "Quick Sort pertama kali digunakan pada tahun?", options: ["1960", "1950", "1970", "1980"], answer: 0 }
+        ]
+    };
+
+    // Page navigation
+    const pageMateri = document.getElementById('pageMateri');
+    const pageDetail = document.getElementById('pageDetail');
+    const pagePraktikum = document.getElementById('pagePraktikum');
+    const pagePraktikumDetail = document.getElementById('pagePraktikumDetail');
+    const pageLatihan = document.getElementById('pageLatihan');
+    const pageSoal = document.getElementById('pageSoal');
+
+    const materiBtn = document.getElementById('materiBtn');
+    const praktikumBtn = document.getElementById('praktikumBtn');
+    const latihanBtn = document.getElementById('latihanBtn');
+
+    const backFromMateri = document.getElementById('backFromMateri');
+    const backFromDetail = document.getElementById('backFromDetail');
+    const backFromPraktikum = document.getElementById('backFromPraktikum');
+    const backFromPraktikumDetail = document.getElementById('backFromPraktikumDetail');
+    const backFromLatihan = document.getElementById('backFromLatihan');
+    const backFromSoal = document.getElementById('backFromSoal');
+
+    materiBtn.addEventListener('click', () => pageMateri.classList.add('active'));
+    praktikumBtn.addEventListener('click', () => pagePraktikum.classList.add('active'));
+    latihanBtn.addEventListener('click', () => pageLatihan.classList.add('active'));
+
+    backFromMateri.addEventListener('click', () => pageMateri.classList.remove('active'));
+    backFromDetail.addEventListener('click', () => { pageDetail.classList.remove('active'); pageMateri.classList.add('active'); });
+    backFromPraktikum.addEventListener('click', () => pagePraktikum.classList.remove('active'));
+    backFromPraktikumDetail.addEventListener('click', () => { pagePraktikumDetail.classList.remove('active'); pagePraktikum.classList.add('active'); });
+    backFromLatihan.addEventListener('click', () => pageLatihan.classList.remove('active'));
+    backFromSoal.addEventListener('click', () => { pageSoal.classList.remove('active'); pageLatihan.classList.add('active'); });
+
+    // Fungsi detail materi (sama seperti sebelumnya)
+    function showDetailMateri(algorithm) {
+        let title = '', content = '';
+        const materiContent = {
+            bubble: { title: '🫧 Bubble Sort - Materi Lengkap', content: '<div class="materi-section"><h3>📖 Pengertian Bubble Sort</h3><p>Bubble Sort adalah algoritma pengurutan sederhana yang bekerja dengan cara berulang kali menukar elemen yang berdekatan jika mereka berada dalam urutan yang salah.</p></div><div class="materi-section"><h3>⚙️ Cara Kerja</h3><p>1. Bandingkan elemen pertama dan kedua. Jika lebih besar, tukar.<br>2. Lanjutkan ke pasangan berikutnya.<br>3. Ulangi hingga tidak ada pertukaran.</p></div><div class="materi-section"><h3>💻 Kode</h3><div class="code-block">function bubbleSort(arr) { for(let i=0; i<arr.length-1; i++) { for(let j=0; j<arr.length-i-1; j++) { if(arr[j] > arr[j+1]) { [arr[j], arr[j+1]] = [arr[j+1], arr[j]]; } } } return arr; }</div></div>' },
+            selection: { title: '🎯 Selection Sort - Materi Lengkap', content: '<div class="materi-section"><h3>📖 Pengertian Selection Sort</h3><p>Selection Sort mencari elemen terkecil dan menukarnya ke posisi awal.</p></div>' },
+            insertion: { title: '📌 Insertion Sort - Materi Lengkap', content: '<div class="materi-section"><h3>📖 Pengertian Insertion Sort</h3><p>Insertion Sort menyisipkan elemen ke posisi tepat seperti menyusun kartu.</p></div>' },
+            exchange: { title: '🔄 Exchange Sort - Materi Lengkap', content: '<div class="materi-section"><h3>📖 Pengertian Exchange Sort</h3><p>Exchange Sort membandingkan setiap elemen dengan elemen setelahnya.</p></div>' },
+            merge: { title: '🔄 Merge Sort - Materi Lengkap', content: '<div class="materi-section"><h3>📖 Pengertian Merge Sort</h3><p>Merge Sort menggunakan divide and conquer, membagi array lalu menggabungkan.</p></div>' },
+            quick: { title: '⚡ Quick Sort - Materi Lengkap', content: '<div class="materi-section"><h3>📖 Pengertian Quick Sort</h3><p>Quick Sort memilih pivot dan mempartisi array secara rekursif.</p></div>' },
+            perbandingan: { title: '📊 Perbandingan Semua Algoritma', content: '<div class="materi-section"><h3>📊 Tabel Perbandingan</h3><div class="complexity-table"><table><tr><th>Algoritma</th><th>Best</th><th>Average</th><th>Worst</th><th>Space</th></tr><tr><td>Bubble Sort</td><td>O(n)</td><td>O(n²)</td><td>O(n²)</td><td>O(1)</td></tr><tr><td>Selection Sort</td><td>O(n²)</td><td>O(n²)</td><td>O(n²)</td><td>O(1)</td></tr><tr><td>Insertion Sort</td><td>O(n)</td><td>O(n²)</td><td>O(n²)</td><td>O(1)</td></tr><tr><td>Merge Sort</td><td>O(n log n)</td><td>O(n log n)</td><td>O(n log n)</td><td>O(n)</td></tr><tr><td>Quick Sort</td><td>O(n log n)</td><td>O(n log n)</td><td>O(n²)</td><td>O(log n)</td></tr></table></div></div>' }
+        };
+        const data = materiContent[algorithm] || materiContent.bubble;
+        detailTitle.innerHTML = data.title;
+        detailContent.innerHTML = data.content;
+        pageMateri.classList.remove('active');
+        pageDetail.classList.add('active');
+    }
+
+    // Fungsi detail praktikum
+    function showDetailPraktikum(algorithm) {
+        const namaAlgo = { bubble: 'Bubble Sort', selection: 'Selection Sort', insertion: 'Insertion Sort', exchange: 'Exchange Sort', merge: 'Merge Sort', quick: 'Quick Sort' };
+        praktikumTitle.innerHTML = `📝 Praktikum ${namaAlgo[algorithm]}`;
+        praktikumContent.innerHTML = `
+            <div class="praktikum-section">
+                <h3>📋 Tujuan Praktikum</h3>
+                <p>Memahami dan mengimplementasikan algoritma ${namaAlgo[algorithm]} secara langsung.</p>
+            </div>
+            <div class="praktikum-section">
+                <h3>💻 Langkah-langkah</h3>
+                <p>1. Buka halaman utama dan pilih kartu ${namaAlgo[algorithm]}<br>
+                2. Masukkan data array yang ingin diurutkan<br>
+                3. Klik tombol "Jalankan" untuk melihat visualisasi<br>
+                4. Amati proses pengurutan step by step<br>
+                5. Gunakan tombol Reset untuk mencoba data baru</p>
+            </div>
+            <div class="praktikum-section">
+                <h3>📝 Tugas</h3>
+                <p>1. Coba 3 variasi data berbeda (terurut, terbalik, acak)<br>
+                2. Catat jumlah iterasi yang terjadi<br>
+                3. Bandingkan dengan teori kompleksitas waktu</p>
+            </div>
+            <div class="praktikum-section">
+                <h3>✅ Evaluasi</h3>
+                <p>Setelah praktikum, kerjakan latihan soal untuk menguji pemahaman.</p>
+            </div>
+        `;
+        pagePraktikum.classList.remove('active');
+        pagePraktikumDetail.classList.add('active');
+    }
+
+    // Fungsi tampilkan soal
+    let currentSoalAlgo = '';
+    function showSoal(algorithm) {
+        currentSoalAlgo = algorithm;
+        const namaAlgo = { bubble: 'Bubble Sort', selection: 'Selection Sort', insertion: 'Insertion Sort', exchange: 'Exchange Sort', merge: 'Merge Sort', quick: 'Quick Sort' };
+        soalTitle.innerHTML = `📝 Latihan Soal ${namaAlgo[algorithm]} (20 Soal)`;
+        
+        const soal = soalData[algorithm];
+        let soalHtml = '';
+        soal.forEach((q, idx) => {
+            soalHtml += `
+                <div class="soal-item">
+                    <div class="soal-question">${idx+1}. ${q.question}</div>
+                    <div class="soal-options">
+                        ${q.options.map((opt, optIdx) => `<label><input type="radio" name="q${idx}" value="${optIdx}"> ${opt}</label>`).join('')}
+                    </div>
+                </div>
+            `;
+        });
+        soalContent.innerHTML = soalHtml;
+        document.getElementById('skorContainer').style.display = 'none';
+        pageLatihan.classList.remove('active');
+        pageSoal.classList.add('active');
+    }
+
+    // Submit soal
+    document.getElementById('submitSoalBtn').addEventListener('click', () => {
+        const soal = soalData[currentSoalAlgo];
+        let benar = 0;
+        for (let i = 0; i < soal.length; i++) {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            if (selected && parseInt(selected.value) === soal[i].answer) {
+                benar++;
+            }
+        }
+        const nilai = (benar / soal.length) * 100;
+        document.getElementById('benarCount').textContent = benar;
+        document.getElementById('nilaiAkhir').textContent = Math.round(nilai);
+        document.getElementById('skorContainer').style.display = 'block';
+        alert(`Selamat! Anda menjawab ${benar} dari ${soal.length} soal dengan benar.\nNilai: ${Math.round(nilai)}`);
+    });
+
+    // Event listeners untuk card
+    document.querySelectorAll('[data-materi]').forEach(card => {
+        card.addEventListener('click', () => showDetailMateri(card.getAttribute('data-materi')));
+    });
+    document.querySelectorAll('[data-praktikum]').forEach(card => {
+        card.addEventListener('click', () => showDetailPraktikum(card.getAttribute('data-praktikum')));
+    });
+    document.querySelectorAll('[data-latihan]').forEach(card => {
+        card.addEventListener('click', () => showSoal(card.getAttribute('data-latihan')));
+    });
+</script>
+</body>
+</html>
